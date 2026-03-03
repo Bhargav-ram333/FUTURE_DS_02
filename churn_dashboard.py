@@ -16,15 +16,29 @@ def load_data():
 
     # Clean TotalCharges
     df["TotalCharges"] = pd.to_numeric(df["TotalCharges"], errors="coerce")
-    df["TotalCharges"].fillna(df["TotalCharges"].median(), inplace=True)
+    df["TotalCharges"] = df["TotalCharges"].fillna(df["TotalCharges"].median())
 
-    # Clean Churn column
-    df["Churn"] = df["Churn"].astype(str).str.strip()
+    # CLEAN CHURN COLUMN PROPERLY
+    df["Churn"] = (
+        df["Churn"]
+        .astype(str)
+        .str.strip()
+        .str.upper()
+    )
 
-    # Create numeric churn column
-    df["Churn_num"] = df["Churn"].map({"Yes": 1, "No": 0}).fillna(0)
+    # Correct mapping
+    df["Churn_num"] = df["Churn"].map({
+        "YES": 1,
+        "NO": 0
+    })
 
-    # Create Tenure Groups
+    # Drop rows where churn couldn't be mapped
+    df = df.dropna(subset=["Churn_num"])
+
+    # Convert to int
+    df["Churn_num"] = df["Churn_num"].astype(int)
+
+    # Tenure groups
     bins = [0, 12, 24, 48, df["tenure"].max()]
     labels = ["0-12", "12-24", "24-48", "48+"]
     df["TenureGroup"] = pd.cut(
@@ -33,8 +47,6 @@ def load_data():
         labels=labels,
         include_lowest=True
     )
-
-    df.drop_duplicates(inplace=True)
 
     return df
 
