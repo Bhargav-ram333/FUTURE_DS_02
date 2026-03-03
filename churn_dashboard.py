@@ -181,7 +181,7 @@ with col2:
 
 st.dataframe(
     high_risk[
-        ["customerID", "gender", "tenure", "Contract",
+        ["gender", "tenure", "Contract",
          "MonthlyCharges", "TotalCharges", "Churn"]
     ].head(10).reset_index(drop=True),
     width="stretch"
