@@ -10,7 +10,7 @@ st.title("Telco Customer Churn Analysis Dashboard")
 # Load and process dataset
 @st.cache_data
 def load_data():
-    df = pd.read_csv("/Users/bhargavram/Downloads/WA_Fn-UseC_-Telco-Customer-Churn.csv")
+    df = pd.read_csv("cleaned_telco_churn.csv")
     
     # Convert TotalCharges to numeric
     df['TotalCharges'] = pd.to_numeric(df['TotalCharges'], errors='coerce')
