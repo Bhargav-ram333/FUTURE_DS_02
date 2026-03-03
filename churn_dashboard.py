@@ -200,7 +200,8 @@ st.markdown("""
 3. **Higher monthly charges increase churn probability**.
 4. **Fiber optic users churn more than DSL users**.
 5. **Retention improves with long-term contracts**.
-""")avg_tenure_churned = df[df['Churn'] == 'Yes']['tenure'].mean()
+""")
+avg_tenure_churned = df[df['Churn'] == 'Yes']['tenure'].mean()
 
 st.header("Key Performance Indicators")
 col1, col2, col3 = st.columns(3)
