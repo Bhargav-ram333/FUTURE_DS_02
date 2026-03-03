@@ -14,37 +14,19 @@ st.title("Telco Customer Churn Analysis Dashboard")
 def load_data():
     df = pd.read_csv("cleaned_telco_churn.csv")
 
-    # Clean TotalCharges
     df["TotalCharges"] = pd.to_numeric(df["TotalCharges"], errors="coerce")
     df["TotalCharges"] = df["TotalCharges"].fillna(df["TotalCharges"].median())
 
-    # CLEAN CHURN COLUMN PROPERLY
-    df["Churn"] = (
-        df["Churn"]
-        .astype(str)
-        .str.strip()
-        .str.upper()
-    )
-
-    # Correct mapping
-    df["Churn_num"] = df["Churn"].map({
-        "YES": 1,
-        "NO": 0
-    })
-
-    # Drop rows where churn couldn't be mapped
+    df["Churn"] = df["Churn"].astype(str).str.strip().str.upper()
+    df["Churn_num"] = df["Churn"].map({"YES": 1, "NO": 0})
     df = df.dropna(subset=["Churn_num"])
-
-    # Convert to int
     df["Churn_num"] = df["Churn_num"].astype(int)
 
-    # Tenure groups
-    bins = [0, 12, 24, 48, df["tenure"].max()]
-    labels = ["0-12", "12-24", "24-48", "48+"]
+    # 👇 REPLACED TENURE GROUP CODE
     df["TenureGroup"] = pd.cut(
         df["tenure"],
-        bins=bins,
-        labels=labels,
+        bins=[0, 12, 24, 48, 1000],
+        labels=["0-12", "12-24", "24-48", "48+"],
         include_lowest=True
     )
 
