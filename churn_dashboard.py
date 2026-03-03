@@ -88,8 +88,11 @@ with col1:
 with col2:
     st.subheader("Monthly Charges vs Churn")
     fig, ax = plt.subplots(figsize=(8, 5))
-    sns.boxplot(x='Churn_Label', y='MonthlyCharges', data=df, ax=ax,
-                hue='Churn_Label', palette='Set2', legend=False)
+   sns.boxplot(
+    x="Churn",
+    y="MonthlyCharges",
+    data=df
+)
     ax.set_xlabel("Churn")
     ax.set_ylabel("Monthly Charges ($)")
     st.pyplot(fig)
