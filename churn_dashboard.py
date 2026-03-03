@@ -297,7 +297,7 @@ high_risk = df[
 ]
 
 available_columns = [col for col in 
-    ["customerID", "gender", "tenure", "Contract",
+    [ "gender", "tenure", "Contract",
      "MonthlyCharges", "TotalCharges", "Churn"]
     if col in high_risk.columns]
 
