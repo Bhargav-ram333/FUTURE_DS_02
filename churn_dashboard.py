@@ -296,18 +296,16 @@ high_risk = df[
     (df['MonthlyCharges'] > df['MonthlyCharges'].median())
 ]
 
-col1, col2 = st.columns(2)
-with col1:
-    st.metric("High-Risk Customer Count", len(high_risk))
-with col2:
-    high_risk_churn_rate = high_risk['Churn_num'].mean() * 100
-    st.metric("High-Risk Churn Rate", f"{high_risk_churn_rate:.2f}%")
+available_columns = [col for col in 
+    ["customerID", "gender", "tenure", "Contract",
+     "MonthlyCharges", "TotalCharges", "Churn"]
+    if col in high_risk.columns]
 
 st.dataframe(
-    high_risk[['customerID', 'gender', 'tenure', 'Contract', 'MonthlyCharges', 'TotalCharges', 'Churn_Label']]
+    high_risk[available_columns]
     .head(10)
     .reset_index(drop=True),
-    width='stretch'
+    width="stretch"
 )
 
 st.divider()
